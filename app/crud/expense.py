@@ -27,6 +27,19 @@ async def get_expenses_by_user(session: AsyncSession, payer_id: int):
     )
     return result.scalars().all()
 
+# read many by event
+async def get_expenses_by_event(
+    session: AsyncSession,
+    event_id: int
+):
+    result = await session.execute(
+        select(Expense).where(
+            Expense.event_id == event_id
+        )
+    )
+    return result.scalars().all()
+
+
 # Update
 async def update_expense(
     session: AsyncSession,

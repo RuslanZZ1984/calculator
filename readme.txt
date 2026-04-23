@@ -58,6 +58,8 @@ SELECT * FROM public.expenses;
 SELECT * FROM public.event_participants;
 SELECT * FROM public.expense_splits;
 
+Delete from public.expense_splits;
 Delete from public.expenses;
+Delete from public.event_participants;
 Delete from public.events;
 Delete from public.users;
