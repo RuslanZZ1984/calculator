@@ -23,7 +23,7 @@ names = [
     "Ivan", "Olga", "Pavel", "Elena",
     "Dmitry", "Nastya", "Kirill", "Oleg",
     "Anna", "Sergey", "Yulia", "Maxim",
-    "Irina", "Viktor", "Polina", "Roman"
+    "Irina", "Viktor", "Svetlana", "Roman"
 ]
 
 
@@ -36,7 +36,7 @@ async def test():
         for name in names:
             user = await create_user_service(
                 session,
-                UserCreate(username=f"{name}_test")
+                UserCreate(username=f"{name}_test_3")
             )
             users.append(user)
 
@@ -44,7 +44,7 @@ async def test():
         event = await create_event_service(
             session,
             EventCreate(
-                title="Dinner",
+                title="Dinner_3",
                 owner_id=users[0].id
             )
         )

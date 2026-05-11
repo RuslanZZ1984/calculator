@@ -19,3 +19,11 @@ async def create_event(
     session: AsyncSession = Depends(get_session),
 ):
     return await create_event_service(session, data)
+
+
+@router.get("/{event_id}", response_model=EventRead)
+async def get_event(
+    event_id: int,
+    session: AsyncSession = Depends(get_session),
+):
+    

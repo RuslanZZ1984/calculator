@@ -16,3 +16,9 @@ async def get_user_by_id(session: AsyncSession, user_id: int):
         select(User).where(User.id == user_id)
     )
     return result.scalar_one_or_none()
+
+async def get_all_users(session: AsyncSession):
+    result = await session.execute(
+        select(User)
+    )
+    return result.scalars().all()

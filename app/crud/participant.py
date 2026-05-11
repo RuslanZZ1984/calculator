@@ -6,8 +6,8 @@ from app.schemas.participant import ParticipantCreate
 
 # create
 async def create_participant(
-        session: AsyncSession,
-        data: ParticipantCreate
+    session: AsyncSession,
+    data: ParticipantCreate
 ) -> EventParticipant:
     participant = EventParticipant(**data.model_dump())
     session.add(participant)
@@ -29,8 +29,8 @@ async def get_participant(
 
 # read many (by event)
 async def get_event_participants(
-        session: AsyncSession,
-        event_id: int
+    session: AsyncSession,
+    event_id: int
 ):
     result = await session.execute(
         select(EventParticipant).where(
