@@ -26,4 +26,14 @@ async def get_event(
     event_id: int,
     session: AsyncSession = Depends(get_session),
 ):
-    
+    from app.crud.event import get_event_by_id
+    return await get_event_by_id(session, event_id)
+
+
+@router.get("/user/{user_id}", response_model=list[EventRead])
+async def get_user_events(
+    user_id: int,
+    session: AsyncSession = Depends(get_session),
+):
+    from app.crud.event import get_events_by_user
+    return await get_events_by_user(session, user_id)

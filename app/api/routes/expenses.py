@@ -13,9 +13,19 @@ router = APIRouter(prefix="/expenses", tags=["Expenses"])
 async def get_expenses():
     return {"message": "Expenses endpoint"}
 
+
 @router.post("/", response_model=ExpenseRead)
 async def create_expense(
     data: ExpenseCreate,
     session: AsyncSession = Depends(get_session),
 ):
     return await create_expense_service(session, data)
+
+
+@router.get("/event/{event_id}", response_model=list[ExpenseRead])
+async def get_event_expenses(
+    event_id: int,
+    session: AsyncSession = Depends(get_session),
+):
+    from app.crud.expense import get_expenses_by_event
+    return await get_expenses_by_event(session, event_id)
