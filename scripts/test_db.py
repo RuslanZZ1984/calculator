@@ -23,7 +23,7 @@ names = [
     "Ivan", "Olga", "Pavel", "Elena",
     "Dmitry", "Nastya", "Kirill", "Oleg",
     "Anna", "Sergey", "Yulia", "Maxim",
-    "Irina", "Viktor", "Svetlana", "Roman"
+    "Irina", "Viktor", "Airat", "Roman"
 ]
 
 

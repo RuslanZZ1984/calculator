@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, delete
 
-from app.db.models import ExpenseSplit
+from app.db.models import Expense, ExpenseSplit
 from app.schemas.split import SplitCreate
 
 
@@ -51,3 +51,22 @@ async def delete_split(
     await session.delete(split)
     await session.commit()
     return True
+
+
+async def delete_splits_by_event(
+    session,
+    event_id: int
+):
+    stmt = (
+        delete(ExpenseSplit)
+        .where(
+            ExpenseSplit.expense_id.in_(
+                select(Expense.id).where(
+                    Expense.event_id == event_id
+                )
+            )
+        )
+    )
+
+    await session.execute(stmt)
+    await session.commit()
