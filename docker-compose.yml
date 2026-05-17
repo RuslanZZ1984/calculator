@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16.2
+    environment:
+      POSTGRES_USER: calculator_user
+      POSTGRES_PASSWORD: calculator_pass
+      POSTGRES_DB: calculator_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U calculator_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    ports:
+      - "8001:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  postgres_data:
