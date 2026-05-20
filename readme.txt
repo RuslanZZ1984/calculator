@@ -8,8 +8,18 @@
 - SQLAlchemy
 - PostgreSQL
 - Alembic
+- Docker (опционально)
 
+## Быстрый старт с Docker
 
+1. Скопируйте настройки: `cp .env.example .env`
+2. Запустите: `docker-compose up -d`
+3. Примените миграции: `docker exec -it calculator-app-1 alembic upgrade head`
+4. Откройте: http://localhost:8000/docs
+
+Остановка: `docker-compose down`
+
+## Локальный запуск (без Docker)
 
 Устанавливаем Python 3.12 и запускаем виртуальное окружение
 Создаем виртуальное окружение:
