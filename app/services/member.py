@@ -1,15 +1,15 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.crud import participant as participant_crud
+from app.crud import member as member_crud
 from app.crud.user import get_user_by_id
 from app.crud.event import get_event
 
-from app.schemas.participant import ParticipantCreate
+from app.schemas.member import MemberCreate
 
 
-async def create_participant_service(
+async def create_member_service(
         session: AsyncSession,
-        data: ParticipantCreate
+        data: MemberCreate
 ):
     # Проверяем пользователя
     user = await get_user_by_id(session, data.user_id)
@@ -21,22 +21,22 @@ async def create_participant_service(
     if not event:
         raise ValueError("Событие не найдено")
     
-    return await participant_crud.create_participant(session, data)
+    return await member_crud.create_member(session, data)
 
 
-async def get_event_participants_service(
+async def get_event_members_service(
         session: AsyncSession,
         event_id: int
 ):
-    return await participant_crud.get_event_participants(
+    return await member_crud.get_event_members(
         session, event_id
     )
 
 
-async def delete_participant_service(
+async def delete_member_service(
         session: AsyncSession,
-        participant_id: int
+        member_id: int
 ):
-    return await participant_crud.delete_participant(
-        session, participant_id
+    return await member_crud.delete_member(
+        session, member_id
     )

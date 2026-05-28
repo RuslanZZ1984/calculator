@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-from app.api.routes import users, events, expenses, participants, splits, balances, settlements
+from app.api.routes import users, events, expenses, members, splits, balances, settlements
 
 app = FastAPI(title="Expense Tracker")
 
 app.include_router(users.router)
 app.include_router(events.router)
 app.include_router(expenses.router)
-app.include_router(participants.router)
+app.include_router(members.router)
 app.include_router(splits.router)
 app.include_router(balances.router)
 app.include_router(settlements.router)

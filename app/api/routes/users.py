@@ -9,9 +9,9 @@ from app.crud.user import get_all_users
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
-@router.get("/")  # тестовый
-async def get_users():
-    return {"message": "Users endpoint"}
+# @router.get("/")  # тестовый
+# async def get_users():
+#     return {"message": "Users endpoint"}
 
 
 @router.post("/", response_model=UserRead)

@@ -1,13 +1,13 @@
 from pydantic import BaseModel
 
 
-class ParticipantCreate(BaseModel):
+class MemberCreate(BaseModel):
     event_id: int
     user_id: int
     display_name: str
 
 
-class ParticipanRead(BaseModel):
+class MemberRead(BaseModel):
     id: int
     event_id: int
     user_id: int

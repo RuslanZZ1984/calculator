@@ -9,7 +9,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.expense import get_expenses_by_event
-from app.crud.participant import get_event_participants
+from app.crud.member import get_event_members
 
 from app.crud.split import delete_splits_by_event
 
@@ -23,12 +23,12 @@ async def rebuild_event_splits_service(
     event_id: int
 ):
     # 1. Получаем участников
-    participants = await get_event_participants(
+    members = await get_event_members(
         session,
         event_id
     )
 
-    if not participants:
+    if not members:
         raise ValueError("У события нет участников")
 
     # 2. Получаем расходы
@@ -47,15 +47,15 @@ async def rebuild_event_splits_service(
     for expense in expenses:
 
         split_amount = round(
-            expense.amount / len(participants),
+            expense.amount / len(members),
             2
         )
 
-        for participant in participants:
+        for member in members:
 
             split_data = SplitCreate(
                 expense_id=expense.id,
-                participant_id=participant.id,
+                member_id=member.id,
                 amount=split_amount
             )
 

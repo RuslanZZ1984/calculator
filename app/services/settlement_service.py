@@ -11,18 +11,18 @@ def calculate_settlements(balances: Dict[int, dict]) -> List[dict]:
     debtors = []
 
     # 1. Разделяем
-    for participant_id, data in balances.items():
+    for member_id, data in balances.items():
         balance = round(data["balance"], 2)
 
         if balance > 0:
             creditors.append({
-                "id": participant_id,
+                "id": member_id,
                 "name": data["name"],
                 "amount": balance
             })
         elif balance < 0:
             debtors.append({
-                "id": participant_id,
+                "id": member_id,
                 "name": data["name"],
                 "amount": -balance  # делаем положительным долг
             })
