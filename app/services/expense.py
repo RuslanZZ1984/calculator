@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud import expense as expense_crud
 from app.crud import event as event_crud
-from app.crud import participant as participant_crud
+from app.crud import member as member_crud
 
 from app.schemas.expense import ExpenseCreate, ExpenseUpdate 
 
@@ -14,7 +14,7 @@ async def create_expense_service(session: AsyncSession, data: ExpenseCreate):
         raise ValueError("Событие не найдено") 
     
     # Проверяем участника плательщика 
-    payer = await participant_crud.get_participant(
+    payer = await member_crud.get_member(
         session, 
         data.payer_id
     ) 
@@ -29,7 +29,7 @@ async def create_expense_service(session: AsyncSession, data: ExpenseCreate):
     return await expense_crud.create_expense(session, data) 
 
 
-async def get_participant_expenses_service(session: AsyncSession, payer_id: int): 
+async def get_member_expenses_service(session: AsyncSession, payer_id: int): 
     # можно ещё бизнес логику добавить 
     return await expense_crud.get_expenses_by_user(session, payer_id) 
 
@@ -52,7 +52,7 @@ async def delete_expense_service(session: AsyncSession, expense_id: int):
 
 # from app.crud import expense as expense_crud
 # from app.crud import event as event_crud
-# from app.crud import participant as participant_crud
+# from app.crud import member as member_crud
 
 # from app.schemas.expense import ExpenseCreate, ExpenseUpdate
 # from app.schemas.split import SplitCreate
@@ -71,7 +71,7 @@ async def delete_expense_service(session: AsyncSession, expense_id: int):
 #         raise ValueError("Событие не найдено")
 
 #     # Проверяем плательщика
-#     payer = await participant_crud.get_participant(
+#     payer = await member_crud.get_member(
 #         session,
 #         data.payer_id
 #     )
@@ -90,23 +90,23 @@ async def delete_expense_service(session: AsyncSession, expense_id: int):
 #     )
 
 #     # 2. Получаем участников события
-#     participants = await participant_crud.get_event_participants(
+#     members = await member_crud.get_event_members(
 #         session,
 #         data.event_id
 #     )
 
 #     # 3. Делим сумму
 #     split_amount = round(
-#         expense.amount / len(participants),
+#         expense.amount / len(members),
 #         2
 #     )
 
 #     # 4. Создаём splits
-#     for participant in participants:
+#     for member in members:
 
 #         split_data = SplitCreate(
 #             expense_id=expense.id,
-#             participant_id=participant.id,
+#             member_id=member.id,
 #             amount=split_amount
 #         )
 
@@ -118,7 +118,7 @@ async def delete_expense_service(session: AsyncSession, expense_id: int):
 #     return expense
 
 
-# async def get_participant_expenses_service(
+# async def get_member_expenses_service(
 #     session: AsyncSession,
 #     payer_id: int
 # ):

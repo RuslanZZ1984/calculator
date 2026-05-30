@@ -5,14 +5,14 @@ from app.db.session import AsyncSessionLocal
 
 from app.schemas.user import UserCreate
 from app.schemas.event import EventCreate
-from app.schemas.participant import ParticipantCreate
+from app.schemas.member import MemberCreate
 from app.schemas.expense import ExpenseCreate
 from app.schemas.split import SplitCreate
 
 from app.services.settlement_service import calculate_settlements
 from app.services.user import create_user_service
 from app.services.event import create_event_service
-from app.services.participant import create_participant_service
+from app.services.member import create_member_service
 from app.services.expense import create_expense_service
 from app.services.split import create_split_service
 from app.services.balance import calculate_event_balances_service
@@ -36,7 +36,11 @@ async def test():
         for name in names:
             user = await create_user_service(
                 session,
-                UserCreate(username=f"{name}_test_3")
+                UserCreate(
+                    username=f"{name}_test_3_login",
+                    password="123",
+                    username=f"{name}_test_3"
+                )
             )
             users.append(user)
 
@@ -51,25 +55,25 @@ async def test():
 
         print("EVENT:", event.id, event.title)
 
-        # 3. Participants
-        participants = []
+        # 3. Members
+        members = []
 
         for i, user in enumerate(users):
-            p = await create_participant_service(
+            p = await create_member_service(
                 session,
-                ParticipantCreate(
+                MemberCreate(
                     event_id=event.id,
                     user_id=user.id,
                     display_name=names[i]
                 )
             )
-            participants.append(p)
+            members.append(p)
 
         # 4. Expenses
         expenses = []
 
         for _ in range(10):
-            payer = random.choice(participants)
+            payer = random.choice(members)
             amount = random.randint(100, 2000)
 
             expense = await create_expense_service(
@@ -86,14 +90,14 @@ async def test():
 
         # 5. Splits
         for expense in expenses:
-            split_amount = round(expense.amount / len(participants), 2)
+            split_amount = round(expense.amount / len(members), 2)
 
-            for p in participants:
+            for m in members:
                 await create_split_service(
                     session,
                     SplitCreate(
                         expense_id=expense.id,
-                        participant_id=p.id,
+                        member_id=m.id,
                         amount=split_amount
                     )
                 )

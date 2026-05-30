@@ -46,7 +46,7 @@ async def get_balances(
     # 3. Формируем response
     result = [
         BalanceItem(
-            participant_id=pid,
+            member_id=pid,
             name=data["name"],
             paid=data["paid"],
             owed=data["owed"],
