@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class BalanceItem(BaseModel):
-    participant_id: int
+    member_id: int
     name: str
     paid: float
     owed: float

@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud import split as split_crud
 from app.crud import expense as expense_crud
-from app.crud import participant as participant_crud
+from app.crud import member as member_crud
 
 from app.schemas.split import SplitCreate
 
@@ -18,14 +18,14 @@ async def create_split_service(
     if not expense:
         raise ValueError("Расход не найден")
     
-    participant = await participant_crud.get_participant(
+    member = await member_crud.get_member(
         session,
-        data.participant_id
+        data.member_id
     )
-    if not participant:
+    if not member:
         raise ValueError("Участник не найден")
     
-    if participant.event_id != expense.event_id:
+    if member.event_id != expense.event_id:
         raise ValueError("Участник не из этого события")
     
     return await split_crud.create_split(session, data)
