@@ -6,6 +6,11 @@ class Settings(BaseSettings):
     db_name: str
     db_user: str
     db_password: str
+    
+    # JWT Settings
+    SECRET_KEY: str = "your-secret-key-change-this-in-production"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
     @property
     def database_url_async(self) -> str:
@@ -23,4 +28,5 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
+
 settings = Settings()

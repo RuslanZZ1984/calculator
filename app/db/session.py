@@ -6,7 +6,9 @@ engine = create_async_engine(settings.database_url_async, echo=True)
 
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 
-# get_session — это связка FastAPI ↔ база данных
 async def get_session() -> AsyncGenerator[AsyncSession, None]:
     async with AsyncSessionLocal() as session:
         yield session
+
+# Алиас для обратной совместимости
+get_db = get_session
