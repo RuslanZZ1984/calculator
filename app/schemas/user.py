@@ -1,17 +1,20 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+from typing import Optional
 from datetime import datetime
 
 class UserCreate(BaseModel):
-    login: str
+    email: EmailStr  # <-- добавили обязательный email
+    username: str
     password: str
-    username: str
 
-class UserRead(BaseModel):
+class UserResponse(BaseModel):
     id: int
-    login: str
+    email: str
     username: str
-    created_at: datetime
-    updated_at: datetime
-
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+    
     class Config:
         from_attributes = True
+
+UserRead = UserResponse

@@ -1,16 +1,16 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime, UniqueConstraint
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-
 from app.db.base import Base
 
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
+    email = Column(String, unique=True, nullable=False)
     login = Column(String, unique=True, nullable=False)
     username = Column(String, nullable=False)
-    password = Column(String, nullable=False)
+    hashed_password = Column(String, nullable=False)
 
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
@@ -51,7 +51,6 @@ class EventMember(Base):
     event_id = Column(Integer, ForeignKey("events.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
-    # имя внутри события (важно!)
     display_name = Column(String, nullable=False)
 
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
@@ -78,4 +77,4 @@ class ExpenseSplit(Base):
 
     __table_args__ = (
         UniqueConstraint("expense_id", "member_id", name="uq_expense_member"),
-    )    
+    )

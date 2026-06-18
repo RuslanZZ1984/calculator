@@ -15,7 +15,7 @@
 1. Скопируйте настройки: `cp .env.example .env`
 2. Запустите: `docker-compose up -d`
 3. Примените миграции: `docker exec -it calculator-app-1 alembic upgrade head`
-4. Откройте: http://localhost:8000/docs
+4. Откройте: http://localhost:8005/docs
 
 Остановка: `docker-compose down`
 
@@ -62,7 +62,7 @@ ExpenseSplit (как делим)
 python -m scripts.test_db 
 
 Запускаем Uvicorn:
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --port 8005
 
 Проверяем:
 http://127.0.0.1:8000/docs
@@ -78,6 +78,5 @@ Delete from public.expenses;
 Delete from public.event_members;
 Delete from public.events;
 Delete from public.users;
+Delete from public.users;
 
-
-git switch -c "feature/participant-to-member-auth"
