@@ -15,3 +15,5 @@ python-dotenv==1.0.1
 fastapi-jwt-auth==0.5.0
 passlib==1.7.4
 python-multipart==0.0.9
+
+python-jose[cryptography]
