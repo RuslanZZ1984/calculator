@@ -19,6 +19,6 @@ python-multipart==0.0.9
 python-jose[cryptography]
 email-validator
 
-python-dotenv==1.0.1fastapi-jwt-auth==0.6.0
+python-dotenv==1.0.1
 passlib==1.7.4
 python-multipart==0.0.9
