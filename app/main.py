@@ -10,10 +10,20 @@ from app.api.routes.splits import router as splits_router
 from app.api.routes.balances import router as balances_router
 from app.api.routes.settlements import router as settlements_router
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(
     title="Expense Tracker",
     version="0.1.0",
     openapi_url="/openapi.json"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(auth_router)
